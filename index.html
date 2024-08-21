@@ -4,24 +4,28 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <div class="container">
-            <div class="introBox">
+        <div class="container"> 
+            <div id="introBox">
                 <h1>User Login</h1>
                 <hr>
                 <h3>Create new account</h3>
-                User Name: <input type="text" min="1", max="20" required="required" id="playerName"> <br><br>
-                User Password: <input type="text" min="1", max="20" required="required" id="userPass"> <br><br>
-                User Age: <input type="text" min="1", max="100" required="required" id="userAge"> <br><br>
-                <div onclick="signUpButtonPressed()" class="fakeButton" style="width:60px;">Sign up</div>
-                <br>
+                <form>
+                    User Name: <input type="text" required="required" id="playerName"> <br><br>
+                    User Password: <input type="password" required="required" id="userPass"> <br><br>
+                    User Age: <input type="text" min="1" max="100" required="required" id="userAge"> <br><br>
+                    <p id="signUpError"></p>
+                    <div onclick="signUpButtonPressed()" class="fakeButton" style="width:60px;">Sign up</div>
+                </form>
+               
                 <hr>
                 <h3>Login with existing account</h3>
-                User Name: <input type="text" min="1", max="20" required="required" id="playerName"> <br><br>
-                User Password: <input type="text" min="1", max="20" required="required" id="userPass"> <br><br>
+                User Name: <input type="text" min="1", max="20" required="required" id="playerName2"> <br><br>
+                User Password: <input type="text" min="1", max="20" required="required" id="userPass2"> <br><br>
+                <p id="signInError"></p>
                 <div onclick="signInButtonPressed()" class="fakeButton" style="width:60px;">Sign in</div>
             </div>
             <canvas id="myCanvas" width="250" height="550" style="border:2px solid black">Canvas</canvas>
-            <div class="item1">
+            <div id="item1">
                 <h1>Tetris Remake</h1>
                 <h4>Malcolm Singh</h4>
                 <h2>Next Piece: <span id="nextPieceText"></span></h2>
@@ -32,11 +36,11 @@
                 
                 <div onclick="startButtonPressed()" class="fakeButton">Start</div><br>
                 <div onclick="resetButtonPressed()" class="fakeButton">Reset</div>
-                <div onclick="stopButtonPressed()" class="fakeButton">Stop</div>
+               <!--<div onclick="stopButtonPressed()" class="fakeButton">Stop</div>--> 
                 <br>
             </div>
-            <div class="item2">
-                <h2>Instructions/Settings<br>/Scores</h2>
+            <div id="item2">
+                <h2>Instructions/Settings<br>/User/Scores</h2>
                 <p>Use either the keys <b>"A" and "D"</b> or <b>"Left Arrow" and "Right Arrow"</b> to move the pieces <b>left or right.</b></p>
                 <p>Use either the <b>"W" key or "Up Arrow"</b> key to <b>rotate the piece clockwise.</b></p>
                 <p>Press<b>"S" or "Down Arrow"</b> to have the block <b>drop slowly.</b></p>
@@ -44,7 +48,11 @@
                 <hr>
                 <h4>Settings</h4>
                 Difficulty (1:Easy,2:Medium,3:Hard): <input type="number" min="1", max="3" id="difficultyInput" required="required"> <br><br>
-                <br>
+                <hr>
+                <h4>User</h4>
+                <p>User's Name: <span id="nameOutput"></span></p>
+                <p>User's Age: <span id="ageOutput"></span></p>
+                <div onclick="logoutButtonPressed()" class="fakeButton" style="width:60px">Log out</div>
                 <hr>
                 <h4>Scores</h4>
                 <p id="scoreboard">No scores yet.</p>

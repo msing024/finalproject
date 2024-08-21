@@ -13,7 +13,7 @@
     background-color: white;
 }
 
-.item1{
+#item1{
     justify-content: left;
     padding:20px;
     padding-right: 10px;;
@@ -25,7 +25,7 @@
     overflow-y:hidden;
 }
 
-.item2 {
+#item2 {
     justify-content: left;
     padding:20px;
     border:0px solid black;
@@ -60,11 +60,15 @@ body{
     cursor: pointer;
 }
 
-.introBox {
-    flex:30%;
+#introBox {
+    
     visibility: visible;
     border: 0px solid black;
     height: 510px;
+    width: 600px;
+    overflow-y: scroll;
+    display: auto;
+    font-size: 15px;
 }
 
 #myCanvas {

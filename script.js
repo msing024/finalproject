@@ -3,6 +3,7 @@ let rightJustPressed = false, leftJustPressed = false, upJustPressed = false, do
 let rows = 22, cols = 10, blockSize = 25, fallTimer = 0, samePosCounter = 0, prevX, prevY, stopped = false;
 let timerVal = 40, score = 0, linesClearedatOnce = 0, blockPlaceCounter = 0, timeoutValue = 3;
 let startPosX = 3, startPosY = -3, gameState = "Start", resetting = false, holder, loginState = "loggedOut";
+let users=[], currentUsersName = "";
 class Board {
     constructor(ctx){
         this.grid = []
@@ -79,7 +80,7 @@ class Board {
                 } else {
                     if (value != 0){
                         this.grid[y][x] = p.number;
-                        print("Placed at:" + x + "," + y);
+                        console.log("Placed at:" + x + "," + y);
                     }   
                     
                 }
@@ -249,10 +250,11 @@ window.onload = function() {
     let levelText = document.getElementById("levelText");
     let nextPieceText = document.getElementById("nextPieceText");
     let nextPieceImg = document.getElementById("nextPieceImg");
-    let playerName = document.getElementById("playerName");
     let difficultyInput = document.getElementById("difficultyInput");
     let specialMessage = document.getElementById("specialMessage");
     let scoreboard = document.getElementById("scoreboard");
+    let userPass = document.getElementById("userPass");
+    let userAge = document.getElementById("userAge");
 
     scoreText.innerHTML = "N/A";
     levelText.innerHTML = "N/A";
@@ -454,8 +456,8 @@ function justPressedReset(){
 }
 
 function startButtonPressed(){
-    if(playerName.value == "" || difficultyInput.value.length == 0 || difficultyInput.value > 3 || difficultyInput.value < 1){
-        specialMessage.innerHTML = "Please input a name and choose a valid difficulty before starting.";
+    if(difficultyInput.value.length == 0 || difficultyInput.value > 3 || difficultyInput.value < 1){
+        specialMessage.innerHTML = "Please choose a valid difficulty in settings before starting.";
     } else {
         if (difficultyInput.value == 1){
            timerVal = 40;
@@ -477,7 +479,7 @@ function startButtonPressed(){
 
 function resetButtonPressed(){
     if (gameState != "Start"){
-        scoreboard.innerHTML = playerName.value + ": " + score + "<br>" + scoreboard.innerHTML;
+        scoreboard.innerHTML = currentUsersName + ": " + score + "<br>" + scoreboard.innerHTML;
         gameState = "Resetting";
 
     }
@@ -485,4 +487,76 @@ function resetButtonPressed(){
 
 function stopButtonPressed(){
     gameState = "Stopped";
+}
+
+function signUpButtonPressed(){
+    changeToMain();
+    if (document.getElementById("playerName").value.length == 0 || document.getElementById("userPass").value.length == 0 || document.getElementById("userAge").value.length == 0){
+        console.log("Invalid");
+        document.getElementById("signUpError").innerHTML = "Please fill out the form before submitting.";
+    } else{
+        console.log("valid!");
+        document.getElementById("signUpError").innerHTML = "";
+        users.push([document.getElementById("playerName").value,document.getElementById("userPass").value,document.getElementById("userAge").value]);
+        console.log(users);
+        currentUsersName = document.getElementById("playerName").value;
+        changeToMain();
+    }
+   
+}
+
+function signInButtonPressed(){
+    let pName = document.getElementById("playerName2").value;
+    let pPass = document.getElementById("userPass2").value;
+    console.log(pName);
+    console.log(pPass);
+    if (users.length > 0){
+        for (i=0; i<users.length; i++){
+            if (users[i][0] == pName && users[i][1] == pPass){
+                console.log(users[i][0]);
+                console.log(users[i][1]);
+                changeToMain();
+                document.getElementById("nameOutput").innerHTML = pName;
+                document.getElementById("ageOutput").innerHTML = users[i][2];
+                currentUsersName = users[i][0];
+                break;
+            } else {
+                document.getElementById("signInError").innerHTML = "Password or Username is incorrect";
+            }
+        }
+    } else {
+        document.getElementById("signInError").innerHTML = "No users are registered.";
+    }
+   
+}
+
+function changeToMain(){
+    document.getElementById("myCanvas").style.visibility = "visible";
+    document.getElementById("item1").style.visibility = "visible";
+    document.getElementById("item2").style.visibility = "visible";
+    document.getElementById("introBox").style.visibility = "hidden";
+    document.getElementById("introBox").style.width = "1px"; 
+    
+    document.getElementById("item1").style.flex = "50%";
+    document.getElementById("item2").style.flex = "50%";
+    document.getElementById("nameOutput").innerHTML = document.getElementById("playerName").value;
+    document.getElementById("ageOutput").innerHTML = document.getElementById("userAge").value;
+}
+
+function changeToLogin(){
+    document.getElementById("myCanvas").style.visibility = "hidden";
+    document.getElementById("item1").style.visibility = "hidden";
+    document.getElementById("item2").style.visibility = "hidden";
+    document.getElementById("introBox").style.visibility = "visible";
+    document.getElementById("introBox").style.width = "600px";
+    document.getElementById("introBox").style.border = "0px solid black";
+    document.getElementById("item1").style.flex = "0%";
+    document.getElementById("item2").style.flex = "0%";
+    document.getElementById("introBox").style.fontSize = "15px"; 
+
+}
+
+function logoutButtonPressed(){
+    changeToLogin();
+    gameState = "Start";
 }
