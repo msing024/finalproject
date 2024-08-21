@@ -1,0 +1,72 @@
+.container{
+    border: 3px solid black;
+    border-collapse: collapse;
+    align-items: center;
+    display: flex;
+   max-width:900px; 
+    padding:10px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.item1{
+    justify-content: left;
+    padding:20px;
+    padding-right: 10px;;
+    border-right:2px dashed black;
+   /* flex:40%; */
+    flex:0%;
+    visibility: hidden;
+    height: 510px;
+    overflow-y:hidden;
+}
+
+.item2 {
+    justify-content: left;
+    padding:20px;
+    border:0px solid black;
+    /*flex:40%; */
+    flex:0%;
+    height: 510px;
+    overflow-y: scroll;
+    visibility:hidden;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(245, 235, 220);
+}
+
+.fakeButton{
+    width:50px;
+    border: 1px solid black;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    border-radius: 3px;
+    background-color: rgb(240, 240, 240);
+    user-select: none;
+}
+
+.fakeButton:hover{
+    background-color: rgb(218, 218, 218);
+    cursor: pointer;
+}
+
+.introBox {
+    flex:30%;
+    visibility: visible;
+    border: 0px solid black;
+    height: 510px;
+}
+
+#myCanvas {
+    visibility: hidden;
+}
