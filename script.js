@@ -3,7 +3,7 @@ let rightJustPressed = false, leftJustPressed = false, upJustPressed = false, do
 let rows = 22, cols = 10, blockSize = 25, fallTimer = 0, samePosCounter = 0, prevX, prevY, stopped = false;
 let timerVal = 40, score = 0, linesClearedatOnce = 0, blockPlaceCounter = 0, timeoutValue = 3;
 let startPosX = 3, startPosY = -3, gameState = "Start", resetting = false, holder, loginState = "loggedOut";
-let users=[], currentUsersName = "";
+let users=[], currentUsersName = "", tickTimer=0;
 class Board {
     constructor(ctx){
         this.grid = []
@@ -80,7 +80,6 @@ class Board {
                 } else {
                     if (value != 0){
                         this.grid[y][x] = p.number;
-                        console.log("Placed at:" + x + "," + y);
                     }   
                     
                 }
@@ -113,14 +112,17 @@ class Board {
                 
             }
             if (filledCounter == 10){
+                console.log("score is: "+score+" and about to run the clear lines function");
                 linesClearedatOnce = linesClearedatOnce + 1;
-                this.grid[i] = [0,0,0,0,0,0,0,0,0,0];
+                for (var x=0;x<this.grid[i].length;x++){
+                    this.grid[i][x] = 0;
+                }
                 for (var x = i-1; x > 0; x--){
                     let currentGrid = this.grid[x];
                     this.grid[x+1] = currentGrid;
                     
                 }
-                
+                console.table(this.grid);
             }
             filledCounter = 0;
         }
@@ -272,6 +274,7 @@ window.onload = function() {
     function draw1() {
 
         if (gameState == "Running"){
+            tickTimer = tickTimer + 1;
             ctx.clearRect(0,0,250,550);
             // Player input Area
             if (rightJustPressed){
@@ -348,9 +351,6 @@ window.onload = function() {
                 timer = timer - 1;
             } else {
                 let p = {...piece};
-                console.log(p);
-                let d = piece;
-                console.log(d);
                 p.y = p.y + 1;
                 if (board.validation(p)){
                     piece.move(0,1);
@@ -456,18 +456,22 @@ function justPressedReset(){
 }
 
 function startButtonPressed(){
+    difficultyInput = document.getElementById("difficultyInput");
     if(difficultyInput.value.length == 0 || difficultyInput.value > 3 || difficultyInput.value < 1){
         specialMessage.innerHTML = "Please choose a valid difficulty in settings before starting.";
     } else {
         if (difficultyInput.value == 1){
            timerVal = 40;
            timeoutValue = 3;
+           document.getElementById("levelText").innerHTML = "Easy";
         } else if (difficultyInput.value == 2){
             timerVal = 20;
            timeoutValue = 3;
+           document.getElementById("levelText").innerHTML = "Medium";
         } else {
             timerVal = 10;
             timeoutValue = 2;
+            document.getElementById("levelText").innerHTML = "Hard";
         }
         
         justPressedReset();
@@ -490,7 +494,6 @@ function stopButtonPressed(){
 }
 
 function signUpButtonPressed(){
-    changeToMain();
     if (document.getElementById("playerName").value.length == 0 || document.getElementById("userPass").value.length == 0 || document.getElementById("userAge").value.length == 0){
         console.log("Invalid");
         document.getElementById("signUpError").innerHTML = "Please fill out the form before submitting.";
